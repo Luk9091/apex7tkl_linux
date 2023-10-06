@@ -1,5 +1,10 @@
 from PIL import Image
 from PIL import ImageDraw
+from PIL import ImageFont
+
+from clock import get_time
+# from clock import timer()
+
 
 full = "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" \
 "\xc0\xfc\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" \
@@ -53,14 +58,33 @@ OLED_PREAMBLE = [0x65]
 
 #print("[%s]" % (", ".join(map(hex, full))), len(full))
 
-def text_payload(text):
+def text_payload(text, font_size = 16):
     im = Image.new("1", (OLED_WIDTH, OLED_HEIGHT))
 
     draw = ImageDraw.Draw(im)
+    font = ImageFont.truetype("Font/DejaVuSansMono.ttf", font_size)
 
-    draw.text((1,0), text, fill=(255))
+    draw.text((1,0), text, fill=(255), font=font)
 
     return _pixels_to_payload(im)
+
+def clock_payload():
+    img = Image.new('1', (OLED_WIDTH, OLED_HEIGHT))
+    
+    draw = ImageDraw.Draw(img)
+
+    font = ImageFont.truetype("Font/DejaVuSansMono.ttf", 42)
+    draw.text((-1, -3), get_time(), font=font, fill=(255))
+
+    return _pixels_to_payload(img)
+
+def timer_payload():
+    img = Image.new('1', (OLED_WIDTH, OLED_HEIGHT))
+
+    draw = ImageDraw.Draw(img)
+
+    font = ImageFont.truetype("Font/DejaVuSansMono.ttf", 42)
+# draw.text((-1, -3), )
 
 def _pixels_to_payload(im):
     pix = im.load()

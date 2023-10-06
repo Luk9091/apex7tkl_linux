@@ -12,8 +12,9 @@ import oled
 DEFAULT_LEN = 642
 
 TARGETS = [
-    { "name": "apex7", "idVendor": 0x1038, "idProduct": 0x1612 },
-    { "name": "apex7tkl", "idVendor": 0x1038, "idProduct": 0x1618 }
+    { "name": "apex7",      "idVendor": 0x1038, "idProduct": 0x1612 },
+    { "name": "apex7tkl",   "idVendor": 0x1038, "idProduct": 0x1618 },
+    { "name": "apexPro",    "idVendor": 0x1038, "idProduct": 0x1610 }
 ]
 
 def find_device():
@@ -92,31 +93,19 @@ class Device():
         self.oled_image(filename)
 
     def oled_image(self, filename):
-        imagedata = oled.image_to_payload(filename)
-        report = oled.OLED_PREAMBLE + imagedata
+        image_data = oled.image_to_payload(filename)
+        report = oled.OLED_PREAMBLE + image_data
         self.send(0x300, 0x01, report)
 
-    def oled_text(self, text):
-        imagedata = oled.text_payload(text)
-        report = oled.OLED_PREAMBLE + imagedata
+    def oled_text(self, text, font_size):
+        image_data = oled.text_payload(text, font_size)
+        report = oled.OLED_PREAMBLE + image_data
         self.send(0x300, 0x01, report)
 
-#printimage(full)
-#payload_to_image(full, "payload.png")
-#loaded = image_to_payload("payload.png")
-#printimage(loaded)
-#
-#printimage(text_payload("Hello World\nLine 2\nLine3"))
-#printimage(text_payload("Hello World\nLine 2\nOverflow 12345678901234567890"))
-#
+    def oled_time(self):
+        image_data = oled.clock_payload()
+        report = oled.OLED_PREAMBLE + image_data
+        self.send(0x300, 0x01, report)
 
-#cfg = dev.get_active_configuration()
-#print("config", cfg)
-#intf = cfg[(0, 0)]
-#
-#ep = usb.util.find_descriptor(intf,
-#        custom_match = \
-#            lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT)
-#
-#print("endpoint", ep)
-
+    # def oled_timer(self):
+    #     imag
