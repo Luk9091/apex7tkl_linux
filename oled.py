@@ -84,7 +84,6 @@ def timer_payload():
     draw = ImageDraw.Draw(img)
 
     font = ImageFont.truetype("Font/DejaVuSansMono.ttf", 42)
-# draw.text((-1, -3), )
 
 def _pixels_to_payload(im):
     pix = im.load()
@@ -100,7 +99,6 @@ def _pixels_to_payload(im):
             payload_bin[-1] += str(val)
 
     payload_bin = [int(b, 2) for b in payload_bin]
-#    print("[%s]" % ", ".join(map(hex, payload_bin)))
     return payload_bin
 
 def image_to_payload(filename="payload.png"):

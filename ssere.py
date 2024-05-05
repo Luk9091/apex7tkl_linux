@@ -16,7 +16,7 @@ with device.Device() as device:
         sleep(1.0)
     device.oled_blank()
     sleep(2)
-    device.oled_image("./images/grimm.png")
+    device.oled_image("/home/lukasz/DriversAndScripts/apex7tkl_linux/images/grimm.png")
 
 def switch_configs(device):
     print("set_config(2)")

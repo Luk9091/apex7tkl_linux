@@ -89,7 +89,7 @@ class Device():
         report = self.pad(report, 20)
         self.send(0x200, 0x01, report)
 
-    def oled_blank(self, filename="./images/blank.png"):
+    def oled_blank(self, filename="/opt/DriversAndScripts/apex7tkl_linux/images/blank.png"):
         self.oled_image(filename)
 
     def oled_image(self, filename):
@@ -106,6 +106,7 @@ class Device():
         image_data = oled.clock_payload()
         report = oled.OLED_PREAMBLE + image_data
         self.send(0x300, 0x01, report)
+        
 
     # def oled_timer(self):
     #     imag

@@ -29,6 +29,44 @@ def oled_time(wait = 60):
             dev.oled_time()
             clock.wait(wait)
 
+def oled_timer(*countTo: str):
+    countTo = countTo[0]
+    font_size = 24
+    time = [0, 0, 0]
+    countTo = countTo.split(':')
+    for i in range(len(countTo), -1):
+        time[i] = int(countTo[i])
+
+
+    with device.Device() as dev:
+        while True:
+            countTo = ""
+
+            time[2] -= 1
+            if time[2] < 0:
+                time[2] = 59
+                time[1] -= 1
+            if time[1] < 0:
+                time[1] = 59
+                time[0] -= 1
+            if time[0] < 0:
+                break
+
+            for i in range(0, 3):
+                if time[i] < 10:
+                    countTo += "0"
+                countTo += str(time[i])
+                if i != 2:
+                    countTo += ":"
+
+            dev.oled_text(countTo, font_size)
+            clock.wait(1)
+
+        dev.oled_text("Times", 42)
+        
+            
+
+
 
 
 def oled_text(*args):
@@ -83,7 +121,7 @@ COMMANDS = {
         "oledtext":     {"minargs": 1, "handler": oled_text},
         "color":        {"minargs": 2, "handler": set_colors},
         "clock":        {"minargs": 0, "handler": oled_time},
-        # "timer": {"minargs": 1, "handler": timer}
+        # "timer":        {"minargs": 1, "handler": oled_timer}
         }
 
 if __name__ == "__main__":

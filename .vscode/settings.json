@@ -4,7 +4,13 @@
     ],
     "cSpell.words": [
         "colordef",
+        "imglines",
+        "linedata",
+        "lineidx",
         "minargs",
-        "oledtext"
+        "oledtext",
+        "printimage",
+        "RRGGBB",
+        "toimage"
     ]
 }
